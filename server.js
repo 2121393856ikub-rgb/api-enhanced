@@ -11,6 +11,7 @@ const fileUpload = require('express-fileupload')
 const decode = require('safe-decode-uri-component')
 const logger = require('./util/logger.js')
 const { APP_CONF } = require('./util/config.json')
+const { injectSpeedInsights } = require('@vercel/speed-insights')
 
 /**
  * The version check result.
@@ -436,6 +437,9 @@ async function serveNcmApi(options) {
     checkVersionSubmission,
     constructServerSubmission,
   ])
+
+  // Inject Vercel Speed Insights for performance monitoring
+  injectSpeedInsights()
 
   spinner.stop()
 
